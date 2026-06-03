@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Support Agent Hub | AuraGlow Skincare</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="dark-theme">
+    <div class="app-container">
+        
+        
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <div class="brand-info">
+                    <h2>AuraGlow Skincare</h2>
+                    <span>AI Agent Desk</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <button class="menu-item active" id="menu-inbox" onclick="switchTab('inbox')">
+                    <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0a2 2 0 01-2 2H6a2 2 0 01-2-2m16 0l-8 5-8-5" />
+                    </svg>
+                    <span>Ticket Inbox</span>
+                    <span class="badge badge-accent" id="inbox-count">0</span>
+                </button>
+                <button class="menu-item" id="menu-kb" onclick="switchTab('kb')">
+                    <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    <span>Knowledge Base</span>
+                </button>
+                <button class="menu-item" id="menu-analytics" onclick="switchTab('analytics')">
+                    <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2" />
+                    </svg>
+                    <span>Analytics</span>
+                </button>
+                <button class="menu-item" id="menu-settings" onclick="switchTab('settings')">
+                    <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span>Playground &amp; Key</span>
+                </button>
+            </nav>
+            
+            <div class="sidebar-status-box">
+                <div class="status-indicator-wrapper">
+                    <span class="status-dot offline" id="api-status-dot"></span>
+                    <span id="api-status-text">Using Local Mock Engine</span>
+                </div>
+                <div class="status-info">
+                    <small>Switch model parameters anytime in settings.</small>
+                </div>
+            </div>
+        </aside>
+        
+        
+        <main class="main-content">
+            
+            
+            <header class="main-header">
+                <div class="header-left">
+                    <h1 id="page-title">Ticket Inbox</h1>
+                </div>
+                <div class="header-right">
+                    <button class="btn btn-primary" onclick="openNewTicketModal()">
+                        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Submit Custom Ticket
+                    </button>
+                </div>
+            </header>
+            
+            
+            <div class="tab-viewport">
+                
+                
+                <section class="tab-panel active" id="tab-inbox">
+                    <div class="inbox-layout">
+                        
+                        <div class="inbox-list-pane">
+                            <div class="search-filter-bar">
+                                <div class="search-input-wrapper">
+                                    <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                    <input type="text" id="search-tickets" placeholder="Search customer, topic..." onkeyup="filterTickets()">
+                                </div>
+                                <div class="filters-row">
+                                    <select id="filter-category" onchange="filterTickets()">
+                                        <option value="">All Categories</option>
+                                        <option value="Billing">Billing</option>
+                                        <option value="Shipping">Shipping</option>
+                                        <option value="Technical">Technical</option>
+                                        <option value="Product Inquiry">Product Inquiry</option>
+                                        <option value="Refund">Refund</option>
+                                    </select>
+                                    <select id="filter-priority" onchange="filterTickets()">
+                                        <option value="">All Priorities</option>
+                                        <option value="Low">Low</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="High">High</option>
+                                        <option value="Urgent">Urgent</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="ticket-list" id="ticket-list-container">
+                                
+                                <div class="spinner-container"><div class="spinner"></div></div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="inbox-detail-pane" id="ticket-detail-pane">
+                            
+                            <div id="active-ticket-view" style="display: none;">
+                                <div class="ticket-workspace-header">
+                                    <div class="ticket-meta-info">
+                                        <h2 id="ticket-subject">Subject</h2>
+                                        <p class="customer-subtitle">
+                                            From: <strong id="ticket-customer">Name</strong> 
+                                            (<span id="ticket-email">email@domain.com</span>) 
+                                            &bull; <span id="ticket-time">Time</span>
+                                        </p>
+                                    </div>
+                                    <div class="ticket-status-pills">
+                                        <span class="status-badge" id="ticket-status-badge">Status</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="workspace-body">
+                                    
+                                    <div class="content-card message-card">
+                                        <div class="card-header">
+                                            <h3>Customer Message</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <p id="ticket-message-text" class="message-body-text">Loading...</p>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="grid-layout cols-2">
+                                        
+                                        <div class="content-card ai-analysis-card">
+                                            <div class="card-header border-glow-blue">
+                                                <div class="header-title-ai">
+                                                    <span class="sparkle-icon">✨</span>
+                                                    <h3>AI Intelligence Classification</h3>
+                                                </div>
+                                                <span class="confidence-tag" id="ticket-confidence">Confidence: --</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="meta-pills-container">
+                                                    <div class="meta-pill-item">
+                                                        <label>Category</label>
+                                                        <span class="value-tag" id="ticket-ai-category">Billing</span>
+                                                    </div>
+                                                    <div class="meta-pill-item">
+                                                        <label>Priority</label>
+                                                        <span class="value-tag" id="ticket-ai-priority">High</span>
+                                                    </div>
+                                                    <div class="meta-pill-item">
+                                                        <label>Customer Sentiment</label>
+                                                        <span class="value-tag" id="ticket-ai-sentiment">Angry</span>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="ai-reasoning-section">
+                                                    <label>Classification Reasoning</label>
+                                                    <p id="ticket-ai-reasoning" class="reasoning-text">Reasoning text...</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        <div class="content-card rag-card">
+                                            <div class="card-header border-glow-purple">
+                                                <div class="header-title-ai">
+                                                    <span class="database-icon">📚</span>
+                                                    <h3>RAG Context Retrieval</h3>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="rag-articles-list" class="rag-sources-list">
+                                                    
+                                                    <p class="neutral-placeholder">No context sources needed.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="content-card responder-card">
+                                        <div class="card-header">
+                                            <h3>AI Draft Response Console</h3>
+                                            <div class="composer-actions">
+                                                <button class="btn btn-secondary btn-sm" onclick="reAnalyzeTicket()">
+                                                    <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89H18" />
+                                                    </svg>
+                                                    Regenerate Draft
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <textarea id="email-draft-body" class="email-textarea" rows="10"></textarea>
+                                            <div class="approval-footer">
+                                                <span class="approval-disclaimer">ℹ️ Human-in-the-loop: Review and edit before finalizing. Status becomes 'Resolved'.</span>
+                                                <button class="btn btn-accent" id="approve-btn" onclick="approveResponse()">
+                                                    <svg class="btn-icon fill-curr" viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                                    </svg>
+                                                    Approve &amp; Send Draft
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="inbox-empty-view" id="empty-ticket-view">
+                                <div class="empty-state-card">
+                                    <div class="empty-icon">📂</div>
+                                    <h2>No Ticket Selected</h2>
+                                    <p>Select an incoming support ticket from the inbox pane to review its RAG contextual search, sentiment classification, and AI drafted response.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                
+                <section class="tab-panel" id="tab-kb">
+                    <div class="kb-container">
+                        <div class="kb-header-row">
+                            <div class="search-input-wrapper max-400">
+                                <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                                <input type="text" id="search-kb" placeholder="Search Knowledge Base..." onkeyup="renderKB()">
+                            </div>
+                            <button class="btn btn-primary" onclick="openNewArticleModal()">
+                                <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                                </svg>
+                                Create FAQ Article
+                            </button>
+                        </div>
+                        
+                        <div class="kb-articles-grid" id="kb-grid-container">
+                            
+                        </div>
+                    </div>
+                </section>
+                
+                
+                <section class="tab-panel" id="tab-analytics">
+                    <div class="analytics-container">
+                        
+                        <div class="metrics-row">
+                            <div class="metric-card shadow-blue">
+                                <div class="metric-val" id="metric-total-tickets">0</div>
+                                <div class="metric-label">Total Support Tickets</div>
+                            </div>
+                            <div class="metric-card shadow-green">
+                                <div class="metric-val" id="metric-automation-rate">0%</div>
+                                <div class="metric-label">AI Automation Rate</div>
+                            </div>
+                            <div class="metric-card shadow-purple">
+                                <div class="metric-val" id="metric-cost-saved">$0.00</div>
+                                <div class="metric-label">Estimated Savings (vs Manual)</div>
+                            </div>
+                            <div class="metric-card shadow-gold">
+                                <div class="metric-val" id="metric-resolution-time">0.2s</div>
+                                <div class="metric-label">Average AI Latency</div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="grid-layout cols-2 margin-top-2">
+                            
+                            <div class="content-card">
+                                <div class="card-header">
+                                    <h3>Ticket Influx Categories</h3>
+                                </div>
+                                <div class="card-body flex-center">
+                                    <div class="stats-chart-placeholder" id="category-bars">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="content-card">
+                                <div class="card-header">
+                                    <h3>Customer Sentiment Profiling</h3>
+                                </div>
+                                <div class="card-body flex-center">
+                                    <div class="stats-chart-placeholder" id="sentiment-bars">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="content-card margin-top-2">
+                            <div class="card-header">
+                                <h3>Enterprise LLM Benchmarks (Based on active volume)</h3>
+                            </div>
+                            <div class="card-body pad-none">
+                                <table class="analytics-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Model Architecture</th>
+                                            <th>Input Token Cost (per 1M)</th>
+                                            <th>Output Token Cost (per 1M)</th>
+                                            <th>Average SLA Latency</th>
+                                            <th>Response Style Profile</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="model-comparison-rows">
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                
+                <section class="tab-panel" id="tab-settings">
+                    <div class="settings-layout">
+                        <div class="content-card max-700 margin-auto shadow-glow">
+                            <div class="card-header border-glow-blue">
+                                <div class="header-title-ai">
+                                    <span class="key-icon">🔑</span>
+                                    <h3>Core AI Configuration &amp; Credentials</h3>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form id="settings-form" onsubmit="saveSettings(event)">
+                                    <div class="form-group">
+                                        <label for="gemini-api-key">Gemini API Key</label>
+                                        <input type="password" id="gemini-api-key" placeholder="Enter your gemini-xxx API key..." class="form-input">
+                                        <small class="form-help-text">Your key remains entirely in your browser cache (localStorage) and is only transmitted over SSL directly to your local FastAPI server. Leave blank to run standard smart simulations.</small>
+                                    </div>
+                                    
+                                    <div class="form-group-row">
+                                        <div class="form-group flex-1">
+                                            <label for="model-selector">Default Model</label>
+                                            <select id="model-selector" class="form-input">
+                                                <option value="gemini-1.5-flash">Gemini 1.5 Flash (Recommended: Fast &amp; Cheap)</option>
+                                                <option value="gemini-1.5-pro">Gemini 1.5 Pro (Rich Reasoning)</option>
+                                                <option value="gemini-2.0-flash-exp">Gemini 2.0 Flash (Experimental)</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group width-120">
+                                            <label for="temp-slider">Temperature: <span id="temp-display-val">0.2</span></label>
+                                            <input type="range" id="temp-slider" min="0" max="1" step="0.1" value="0.2" class="form-range" oninput="updateTempDisplay(this.value)">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="settings-action-row">
+                                        <button type="submit" class="btn btn-accent">Save Settings &amp; Re-initialize</button>
+                                        <button type="button" class="btn btn-secondary" onclick="clearSettings()">Clear Saved Key</button>
+                                    </div>
+                                </form>
+                                
+                                <div class="settings-info-callout">
+                                    <h4>💡 Understanding Model Roles in Support Automation:</h4>
+                                    <ul>
+                                        <li><strong>Gemini 1.5 Flash:</strong> Optimal for sorting categorization and generating replies. Run times < 1s. Cost ~ $0.075 per 1 million input tokens.</li>
+                                        <li><strong>Gemini 1.5 Pro:</strong> Best for high-complexity escalation processing and highly tailored medical or specialized skincare advisory.</li>
+                                        <li><strong>Temperature:</strong> Keep it low (0.1 - 0.3) for high reproducibility and adherence to the Knowledge Base. Raise it (0.6+) for more varied/conversational tone of voice.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+            </div>
+        </main>
+        
+    </div>
+
+    
+    <div class="modal-overlay" id="modal-new-ticket">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>Submit Custom Support Ticket</h2>
+                <button class="modal-close" onclick="closeNewTicketModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="new-ticket-form" onsubmit="submitNewTicket(event)">
+                    <div class="form-group-row">
+                        <div class="form-group flex-1">
+                            <label for="new-customer-name">Customer Name</label>
+                            <input type="text" id="new-customer-name" class="form-input" required placeholder="Elena Rostova">
+                        </div>
+                        <div class="form-group flex-1">
+                            <label for="new-customer-email">Email Address</label>
+                            <input type="email" id="new-customer-email" class="form-input" required placeholder="elena.r@live.com">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-ticket-subject">Subject</label>
+                        <input type="text" id="new-ticket-subject" class="form-input" required placeholder="Question about serum compatibility">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-ticket-message">Customer Message</label>
+                        <textarea id="new-ticket-message" class="form-input" rows="5" required placeholder="Describe details here..."></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeNewTicketModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="ticket-submit-btn">Ingest &amp; Run AI Pipeline</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="modal-overlay" id="modal-new-article">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2 id="kb-modal-title">Create FAQ Knowledge Article</h2>
+                <button class="modal-close" onclick="closeNewArticleModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="new-article-form" onsubmit="submitNewArticle(event)">
+                    <input type="hidden" id="kb-article-id">
+                    <div class="form-group-row">
+                        <div class="form-group flex-1">
+                            <label for="kb-article-title">Article Title</label>
+                            <input type="text" id="kb-article-title" class="form-input" required placeholder="Billing Holds & Charges FAQ">
+                        </div>
+                        <div class="form-group flex-1">
+                            <label for="kb-article-category">Category</label>
+                            <select id="kb-article-category" class="form-input" required>
+                                <option value="Billing">Billing</option>
+                                <option value="Shipping">Shipping</option>
+                                <option value="Technical">Technical</option>
+                                <option value="Product Inquiry">Product Inquiry</option>
+                                <option value="Refund">Refund</option>
+                                <option value="General">General</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="kb-article-tags">Keywords/Tags (Comma Separated)</label>
+                        <input type="text" id="kb-article-tags" class="form-input" placeholder="billing, stripe, transaction, holds">
+                    </div>
+                    <div class="form-group">
+                        <label for="kb-article-content">RAG Text Content</label>
+                        <textarea id="kb-article-content" class="form-input" rows="6" required placeholder="Enter actual text articles here. The RAG vector space scans this text for matching queries..."></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeNewArticleModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save KB Reference</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
